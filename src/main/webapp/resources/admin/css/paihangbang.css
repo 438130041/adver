@@ -1,0 +1,207 @@
+html {
+  font-size: 50px;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-width: 320px;
+  width: 750px;
+  margin: 0 auto;
+  line-height: 1.5;
+  font-family: Arial, Helvetica;
+  background: #F2F2F2;
+}
+ul {
+  list-style: none;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 21.33333333px;
+  }
+}
+@media screen and (min-width: 360px) {
+  html {
+    font-size: 24px;
+  }
+}
+@media screen and (min-width: 375px) {
+  html {
+    font-size: 25px;
+  }
+}
+@media screen and (min-width: 384px) {
+  html {
+    font-size: 25.6px;
+  }
+}
+@media screen and (min-width: 400px) {
+  html {
+    font-size: 26.66666667px;
+  }
+}
+@media screen and (min-width: 414px) {
+  html {
+    font-size: 27.6px;
+  }
+}
+@media screen and (min-width: 424px) {
+  html {
+    font-size: 28.26666667px;
+  }
+}
+@media screen and (min-width: 480px) {
+  html {
+    font-size: 32px;
+  }
+}
+@media screen and (min-width: 540px) {
+  html {
+    font-size: 36px;
+  }
+}
+@media screen and (min-width: 720px) {
+  html {
+    font-size: 48px;
+  }
+}
+@media screen and (min-width: 750px) {
+  html {
+    font-size: 50px;
+  }
+}
+.wrapper {
+  width: 15rem;
+}
+.headr {
+  position: fixed;
+  width: 15rem;
+  height: 6.8rem;
+  background: #fdaa2d;
+  z-index: 1;
+}
+.head {
+  position: absolute;
+  top: 1.4rem;
+  left: 1.7rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  overflow: hidden;
+}
+.head img {
+  width: 3.62rem;
+  height: 3.62rem;
+}
+.head-pm {
+  position: absolute;
+  top: 4rem;
+  left: 1.1rem;
+  width: 5rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  text-align: center;
+  font-size: 0.8rem;
+  background: url(../images/pm.png) 0rem -2rem no-repeat;
+  background-size: 5rem 6rem;
+  color: #ffffff;
+}
+.results {
+  position: absolute;
+  top: 1.6rem;
+  right: 0;
+  width: 8rem;
+  height: 4rem;
+}
+.name,
+.major,
+.fraction,
+.timeuse {
+  font-size: 0.6rem;
+  padding: 0.14rem 0;
+  font-weight: 540;
+  color: #fff;
+}
+.fraction {
+  float: left;
+}
+.timeuse {
+  float: right;
+  padding-right: 0.7rem;
+}
+.ranking {
+  position: absolute;
+  top: 6.8rem;
+  width: 14.6rem;
+  padding-left: 0.2rem;
+}
+.brand-top {
+  display: flex;
+  width: 100%;
+  height: 2.6rem;
+  border-bottom: 1px solid #cccccc;
+}
+.brand-flag {
+  width: 10%;
+  height: 100%;
+}
+.brand-flag p {
+  text-align: center;
+  line-height: 2.6rem;
+  font-size: 0.7rem;
+}
+.brand-flag .P {
+  display: none;
+}
+.goods {
+  display: flex;
+  width: 56%;
+  height: 100%;
+}
+.time {
+  width: 15%;
+  height: 100%;
+}
+.fractions {
+  width: 19%;
+  height: 100%;
+}
+.goods-portrait {
+  width: 2rem;
+  height: 2rem;
+  margin: 0.3rem 0.4rem 0 0.3rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.goods-portrait img {
+  width: 2rem;
+  height: 2rem;
+}
+.goods-name {
+  font-size: 0.6rem;
+  line-height: 2.6rem;
+}
+#time {
+  display: block;
+  font-size: 0.6rem;
+  line-height: 2.6rem;
+}
+#fractions {
+  display: block;
+  line-height: 2.6rem;
+  color: #fdaa2d;
+}
+.first {
+  background: url(../images/first.png) 0.2rem 0.8rem no-repeat;
+  background-size: 1rem;
+}
+.second {
+  background: url(../images/second.png) 0.2rem 0.8rem no-repeat;
+  background-size: 1rem;
+}
+.third {
+  background: url(../images/third.png) 0.2rem 0.8rem no-repeat;
+  background-size: 1rem;
+}

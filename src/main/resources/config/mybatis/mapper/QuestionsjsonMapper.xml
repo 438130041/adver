@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.QuestionsjsonDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+      <!-- redis二级缓存 -->
+     <!--  <cache  type="com.lx.practice.util.RedisCache" />  -->
+       
+       <select  id="findByEQJson" parameterType="String"  resultType="com.lx.practice.entity.Questionsjson">
+          SELECT  questions_Json   FROM  exam_question  where  questions_Id = #{questions_idA} OR  questions_Id = #{questions_idB} OR   questions_Id = #{questions_idC} OR questions_Id = #{questions_idD}  OR questions_Id  = #{questions_idE};
+      </select>
+       
+       
+</mapper>

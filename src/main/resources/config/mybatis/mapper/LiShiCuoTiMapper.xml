@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.LiShiCuoTiDao.LiShiCuoTiDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+       
+       
+       
+       
+       <!-- 错题章节查询 -->
+       <!-- 章节精选 （中药学专业知识一）-->
+       <select  id="lishicuotizZYY" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='1e4e3284-bac9-411e-a583-835d40ab8271' -->
+		    select * from history_zhanjie where parentId='60079614-2c3f-4ef5-a60e-db3c6bb5b2e6'   and    openid = #{openid}    ORDER  BY  sortCode+0  asc    
+       </select>
+       <!-- 章节精选 （中药学专业知识二）-->
+       <select  id="lishicuotizZYE" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='9b4216e3-eab1-4168-a156-64c48f019742' --> 
+			select * from history_zhanjie where parentId='a638780e-40ea-4b24-85c8-b58a1e112ff4'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc 
+       </select>
+        <!-- 章节精选 （中药学综合知识与技能）-->
+       <select  id="lishicuotizZYZH" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='1a9cfcd9-3f71-4bd3-a945-1d22a0843eb3' -->
+			select * from history_zhanjie where parentId='b54ed4c4-a9ba-405c-8d20-8c0b703e8f4c'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc  
+       </select>
+        <!-- 章节精选 （药事管理与法规）-->
+       <select  id="lishicuotizYS" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+			select * from history_zhanjie where parentId='148ac965-7a16-4e59-ad28-554fc760afa7'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc  
+       </select>
+       
+       <!-- 西药错题章节信息 -->
+        <!-- 章节精选 （药学专业知识一）-->
+       <select  id="lishicuotizXYY" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='6823298d-7d84-4d11-bf2c-11cd67dc1588' -->
+		    <!-- 因为sortCode字段在数据库中是以字符串的形式存储的，因此在查询时要在字段后面加一个0，这样查询出来的数据就是按顺序排列的 -->	
+		      select * from history_zhanjie where parentId='c9f44130-5ea8-4c99-a9f2-b1da75fc21c6'  and    openid = #{openid}    ORDER BY sortCode+0  asc
+       </select>
+       <!-- 章节精选 （药学专业知识二）-->
+       <select  id="lishicuotizXYE" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+		      select * from history_zhanjie where parentId='99286489-2d7e-4eaf-8ef2-ed8e6f2f5e31'  and    openid = #{openid}   ORDER  BY  sortCode+0  asc     
+       </select>
+       <!-- 章节精选 （药学综合知识与技能）-->
+        <select  id="lishicuotizXYZH" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		   <!--  select * from knowledge_info where parentId='64b67992-b30a-4c12-89f9-e2a2584d4176' -->
+		    select * from history_zhanjie where parentId='0c1947d3-d248-4fa9-8fb8-36c786b1816b'	 and    openid = #{openid}   ORDER  BY  sortCode+0  asc      
+        </select>
+        
+        
+        
+        
+        
+        
+        
+        
+        <!-- 根据微信id和题目id查询出历史错题表中是否已经存在该错题  -->
+        <select  id="chaxuenlishicuotisfcuenzai" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+			select * from  history_title  where questions_id = #{questions_id}  and    openid = #{openid}    
+       </select>
+        
+        
+        
+        <!--   查询出对应章节下的题目  -->
+           <!-- 查询出所有科目下面的章节对应的题目 -->
+        <select  id="lishicuotitimu" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		   <!--  select * from knowledge_info where parentId='64b67992-b30a-4c12-89f9-e2a2584d4176' -->
+		    select * from  history_title  where  knowledge_Id  =  #{knowledge_Id}	 and    openid = #{openid}
+       </select>
+        
+        
+</mapper>

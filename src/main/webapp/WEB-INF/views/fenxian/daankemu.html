@@ -1,0 +1,342 @@
+
+<html lang="zh">
+<head>
+     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <!-- <script  type="text/javascript"  src='../resources/admin/js/jquery-1.10.1.min.js'></script> -->
+    <!-- <script src='https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js'></script>  -->
+    <script  type="text/javascript"  src="../resources/admin/js/jquery.min.js"></script> 
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
+    <link rel="stylesheet" href="../resources/admin/css/common.css?v=20160520">
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
+    <title>2020执考真题答案</title>
+    <script>
+		(function () {
+			function computed() {
+				let HTML = document.documentElement,
+					winW = HTML.clientWidth,
+					desW = 750;
+				if (winW >= desW) {
+					HTML.style.fontSize = "100px";
+					return;
+				}
+				HTML.style.fontSize = winW / desW * 100 + 'px';
+			}
+			computed();
+			window.addEventListener('resize', computed);
+		})();
+	</script>
+    <style>
+  *{
+         margin: 0;
+         padding: 0;
+   }   
+
+ body{
+        max-width: 1080px;
+        min-width: 320px;
+        margin: 0 auto;
+    }
+   
+   .beijingtupian{
+   	 	background:url("https://bj.bcebos.com/v1/uploadfilesbucket/tupain/beijinditu.jpg") no-repeat ;
+   	 	width:100%;
+   		height:100%;
+		background-size: 100% 100%;
+   	}
+
+
+	.subject{
+		width: 75%;
+		height: .75rem;
+		margin-top: .2rem;
+		margin-left: 50%;
+    	transform: translate(-50%);
+	}
+	.subject>img{
+		width: 100%;
+		height: 100%;
+	}
+
+	.ann{
+		width: 100%;
+		height: 100%;
+		position: relative;
+
+	}
+	.ann-n{
+		width: 100%;
+		position: absolute;
+		top: 35%;
+	}
+	@media only screen and (min-width: 1023px) {
+		.subject{
+			height: .6rem;
+		}
+	}
+   	/* .zyydiv{
+   		width:100%;
+   		height:46px;
+   		position:absolute;
+   		left: o.6rem;
+   		margin-top:0.27rem;
+   		border-radius:15px;
+   	 }
+   	.imgzyy{
+   		width:100%;
+   		height:100%;
+   	 }
+   	 .ann{
+
+
+   	  }
+   	  .yxydiv{
+   	  		width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:2.7rem;
+   			border-radius:15px;
+   	   }
+   	  .imgyxy{
+   	  		width:100%;
+   			height:100%;
+   	   }
+   	 .zyediv{
+   	 	    width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:5.2rem;
+   			border-radius:15px;
+   	  }
+   	  .imgzye{
+   	  		width:100%;
+   			height:100%;
+   	   }
+   	  .yxediv{
+   	  		width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:7.7rem;
+   			border-radius:15px;
+   	   }
+   	  .imgyxe{
+   	  		width:100%;
+   			height:100%;
+   	   }
+   	   .zyzhdiv{
+   	   		width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:10.2rem;
+   			border-radius:15px;
+   	    }
+   	   .imgzyzh{
+   	   		width:100%;
+   			height:100%;
+   	    }
+   	   .yxzhdiv{
+   	   		width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:12.7rem;
+   			border-radius:15px;
+   	    }
+   	   .imgyxzh{
+   	   		width:100%;
+   			height:100%;
+   	    }
+   	   .ysdiv{
+   	   		width:100%;
+   			height:46px;
+   			position:absolute;
+   			left: o.6rem;
+   			margin-top:15.2rem;
+   			border-radius:15px;
+   	    }
+   	   .imgys{
+   	   		width:100%;
+   			height:100%;
+   	    } */
+   	   .yanse{
+	 		background-color:#808080;
+		 }
+   </style>
+</head>
+<body>
+	<div class="beijingtupian">
+		<div class="ann">
+			<div class="ann-n">
+		   		<div class="zyydiv subject"  onclick="ZYY()">
+					 <img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgzyy">
+		 		</div>
+		 		<div class="yxydiv subject"  onclick="YXY()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgyxy">
+		 		</div> 
+		 		<div class="zyediv subject" onclick="ZYE()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgzye">
+		 		</div>
+		 		<div class="yxediv subject"  onclick="YXE()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgyxe">
+		 		</div>
+		 		<div class="zyzhdiv subject"  onclick="ZYZH()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgzyzh">
+		 		</div>
+		 		<div class="yxzhdiv subject" onclick="YXZH()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgyxzh">
+		 		</div>
+		 		<div class="ysdiv subject"  onclick="YS()">
+		 			<img alt="" src="https://bj.bcebos.com/v1/uploadfilesbucket/tupain/YS.png"  class="imgys">
+				 </div>
+			</div>
+		</div>
+	</div>
+
+<script type="text/javascript" src="../resources/admin/js/layer/layer.js"></script>
+<script type="text/javascript">
+	
+	function  YXY(){//药学专业知识一按钮
+		
+    		$(".yxydiv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".yxydiv").removeClass("yanse"); 
+			},60);
+		
+		/* var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		});  */
+		
+	    var kemu = "YXY";
+		window.location.href="../daankemu/daanhedui?kemu="+kemu+""
+	}
+	function  YXE(){//药学专业知识二按钮
+		
+		$(".yxediv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".yxediv").removeClass("yanse"); 
+			},60);
+		
+		/* var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		}); */ 		
+		
+		 var kemu = "YXE";
+		 window.location.href="../daankemu/daanhedui?kemu="+kemu+""
+	}
+	function YXZH(){//药学综合知识与技能按钮
+		
+		$(".yxzhdiv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".yxzhdiv").removeClass("yanse"); 
+			},60);
+		
+		var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+					
+				layer.close(layerindex);//弹框消失
+		}); 
+		
+		/* var YXZH = "YXZH";
+		var  kemuZYHXY = "西药";
+		window.location.href=""
+		 $("#YXZH").attr("href","../daankemu/daanhedui");  */
+	}
+	function ZYY(){//中药学专业知识一按钮
+		
+		$(".zyydiv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".zyydiv").removeClass("yanse"); 
+			},60);
+		
+		var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		}); 
+		
+		
+		/* var ZYY = "ZYY";
+		var  kemuZYHXY = "中药";
+		window.location.href=""
+		 $("#ZYY").attr("href","../daankemu/daanhedui"); */ 
+	}
+	function ZYE(){//中药学专业知识二按钮
+		
+		$(".zyediv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".zyediv").removeClass("yanse"); 
+			},60);
+		
+		var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		});  
+		
+		/* var  ZYE = "ZYE";
+		var  kemuZYHXY = "中药";
+		window.location.href=""
+		 $("#ZYE").attr("href","../daankemu/daanhedui"); */  
+	}
+	function ZYZH(){//中药学综合知识与技能按钮
+		
+		$(".zyzhdiv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".zyzhdiv").removeClass("yanse"); 
+			},60);
+		
+		var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		});  
+		
+		/* var ZYZH = "ZYZH";
+		var  kemuZYHXY = "中药";
+		window.location.href=""
+		 $("#ZYZH").attr("href","../daankemu/daanhedui");  */
+	}
+	function YS(){//药事管理与法规按钮
+		
+		$(".ysdiv").addClass("yanse");
+		setTimeout(function(){//ajax延时执行（因为文件夹中的图片刷新会延时，文件夹中的图片刷新出来后在将图片放入标签中才能显示出来）
+				$(".ysdiv").removeClass("yanse"); 
+			},60);
+		
+		var layerindex=layer.confirm('考试暂未开始!', 
+				{
+			      title:'提醒',
+				  btn: ['确定'] //按钮
+				}, function(){
+			layer.close(layerindex);//弹框消失
+		});  
+		
+		/* var  YS = "YS";
+		var  kemuZYHXY = "中药";
+		window.location.href=""
+		 $("#YS").attr("href","../daankemu/daanhedui");  */
+	} 
+</script>
+</body>
+</html>

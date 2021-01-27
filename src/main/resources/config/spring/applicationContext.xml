@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd 
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd" default-lazy-init="true">
+
+    <!-- 上下文主件扫描 -->
+    <context:component-scan base-package="com.lx.practice"><!-- src下的包名，去扫描这个包下面的类 -->
+        <context:include-filter type="annotation"              
+            expression="org.springframework.stereotype.Component"/> <!-- 一般用来标记实体 --><!-- 凡是有Component，RepositoryService，这三个关键字的都都放到spring容器中 -->
+        <context:include-filter type="annotation" 
+            expression="org.springframework.stereotype.Repository"/><!--用来标记数据库操作层（dao）  -->
+        <context:include-filter type="annotation" 
+            expression="org.springframework.stereotype.Service"/><!-- 用来操作service层 -->
+    </context:component-scan>
+       
+    <!-- 加载数据源配置文件db.properties(mysql数据库) -->						 
+    <context:property-placeholder location="classpath*:config/db.properties"   ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath*:config/dbtk.properties"   ignore-unresolvable="true"/> 
+    
+    
+    <!-- 引入Redis数据库配置文件 -->
+	 <!-- <context:property-placeholder location="classpath*:config/redis.properties"  ignore-unresolvable="true"/>   -->
+    	
+    	
+    <!-- 配置redis连接池对象 -->
+		  <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+			<!-- 最大空闲数 -->
+			<property name="maxIdle" value="300"></property>
+			<!-- 最大连接数 -->
+			<property name="maxTotal" value="1000"></property>
+			<!-- 最大等待时间 -->
+			<property name="maxWaitMillis" value="1000"></property>
+			
+			<property name="testOnBorrow" value="true" />  
+		</bean>
+    
+    
+       <!-- 配置redis连接工厂 -->
+		 <bean id="connectionFactory"  class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"> 
+			<!-- 连接池配置 -->
+			 <property name="poolConfig" ref="poolConfig"></property>
+			<!-- 连接主机 -->										   <!-- 本地localhost -->
+			<property name="hostName" value="r-2zepvq773e85hwbbjq.redis.rds.aliyuncs.com"></property><!--阿里 r-2zepvq773e85hwbbjq.redis.rds.aliyuncs.com -->
+			<!-- 端口 -->									   <!-- 6379 -->
+			 <property name="port" value="6379"></property><!-- 6379 -->
+			<!-- 密码 -->											<!-- root -->
+			<property name="password" value="Jingyaoshi123"></property><!-- Jingyaoshi123 -->
+		 </bean>  
+      	
+		
+		  <cache:annotation-driven cache-manager="redisCacheManager"/>
+		 
+		  <!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 ,这里的redisCacheTransfer工厂就是上面的连接工厂-->
+    	  <!-- <bean id="redisCacheTransfer" class="com.lx.practice.util.RedisCacheTransfer">
+    		 <property name="jedisConnectionFactory" ref="connectionFactory"/>这个ref就是redis,bean工厂的id
+ 	 	   </bean>  -->
+
+      	
+    	 
+   <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory" />
+    <!-- 配置默认的序列化策略,非hash的value和hashValue都有效-->
+        <!-- <property name="defaultSerializer" ref="genericJackson2JsonRedisSerializer">
+        </property> -->
+         <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>
+        </property>
+        <!--hash-->
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+        <property name="hashValueSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+        <!-- 配置redis的key的序列化Serializer方式,使5中类型,key都以String类型进行序列化 -->
+        <!-- Hash类型,用Jedis存储key为brandList,但是在redis-cli中查看key却是 "\xac\xed\x00\x05t\x00\tbrandList" -->
+        <!-- <property name="keySerializer" ref="stringRedisSerializer" />
+        <property name="hashKeySerializer" ref="stringRedisSerializer" /> -->
+    
+    </bean>
+    	 
+    	 
+   	<!-- 配置key的序列化方式,使用String类型进行序列化 -->
+  <!-- 	<bean id="stringRedisSerializer"
+        class="org.springframework.data.redis.serializer.StringRedisSerializer" />  -->
+    <!-- 配置hashValue的序列化方式,使用Jackson serializer,将hashValue以json串的形式存储到redis中 -->
+  <!--   <bean id="genericJackson2JsonRedisSerializer"
+        class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer">
+    </bean> -->
+    	  
+     <!--
+　　　　定义缓存管理器redisCacheManager。
+　　　　注意：cache-manager默认值是cacheManager,你的缓存管理器id要是命名是cacheManager，这里可以省略
+    -->
+    <!--1.使用注解驱动-->
+   <!--  <cache:annotation-driven cache-manager="redisCacheManager"></cache:annotation-driven>	 -->  
+    
+    <!--2.定义缓存管理器-->
+    <bean id="redisCacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <!--通过构造方法注入redisTemplate-->
+        <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
+        <!--定义超时时间，单位秒(redis中缓存储存时间)-->
+        <property name="defaultExpiration" value="43000"></property>
+        <!--设置缓存器名称-->
+        <property name="cacheNames">
+            <list>
+                <value>redisCacheManager</value>
+            </list>
+        </property>
+        <!-- 缓存名字和有效期的分隔符 -->
+       <!-- <property name="separator" value="#"/>  -->
+    </bean>
+		
+        
+        
+    <!-- Mysql数据库的一些配置（用户库） -->
+    <!-- 配置c3p0数据 -->
+      <bean id="defultdataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
+        <property name="user" value="${jdbc.usery}"><!-- root --></property>
+		<property name="password" value="${jdbc.passwordy}"></property>
+		<property name="driverClass" value="${jdbc.driverClassy}"></property>
+		<property name="jdbcUrl" value="${jdbc.jdbcUrly}"></property>
+		<property name="initialPoolSize" value="${jdbc.initPoolSizey}"></property>
+		<property name="maxPoolSize" value="${jdbc.maxPoolSizey}"></property>
+    </bean>
+	
+    <!-- Mysql数据库的一些配置（题库） -->
+    <!-- 配置c3p0数据 -->
+      <bean id="jrt_dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
+        <property name="user" value="${jdbct.user}"><!-- root --></property>
+		<property name="password" value="${jdbct.password}"></property>
+		<property name="driverClass" value="${jdbct.driverClass}"></property>
+		<property name="jdbcUrl" value="${jdbct.jdbcUrl}"></property>
+		<property name="initialPoolSize" value="${jdbct.initPoolSize}"></property>
+		<property name="maxPoolSize" value="${jdbct.maxPoolSize}"></property>
+     </bean>
+    
+    <!-- Mysql数据库的一些配置（商城库） -->
+      <!-- 配置c3p0数据 -->
+       <bean id="jrt_shopping" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
+        <property name="user" value="${jdbc.users}"><!-- root --></property>
+		<property name="password" value="${jdbc.passwords}"></property>
+		<property name="driverClass" value="${jdbc.driverClasss}"></property>
+		<property name="jdbcUrl" value="${jdbc.jdbcUrls}"></property>
+		<property name="initialPoolSize" value="${jdbc.initPoolSizes}"></property>
+		<property name="maxPoolSize" value="${jdbc.maxPoolSizes}"></property>
+     </bean>
+      
+      
+      
+   <bean id="dataSource" class="com.lx.practice.util.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <!-- 指定lookupKey和与之对应的数据源，这里的key可以自行定义，要切换数据库的时候以key为标识，不要写错 -->
+                <entry key="defultdataSource" value-ref="defultdataSource"></entry>
+                <entry key="jrt_dataSource" value-ref="jrt_dataSource"></entry>
+                <!-- 商城库 -->
+                <entry key="jrt_shopping" value-ref="jrt_shopping"></entry>
+            </map>
+        </property>
+        <!-- 这里可以指定默认的数据源 -->
+        <property name="defaultTargetDataSource" ref="jrt_dataSource" /> 
+    </bean>
+
+      <!-- 事物管理器（jdbc） -->
+      <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	 </bean>
+      <!-- 事务管理 -->
+      <tx:annotation-driven transaction-manager="transactionManager"/>
+      
+      
+       <!-- 启动声明式事物驱动 -->
+          <tx:annotation-driven transaction-manager="transactionManager" />
+          
+          <!-- spring通过sqlSessionFactoryBean 获得sqlSessionFactoryBean工厂类 -->
+          <bean  id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+              <property name="dataSource"  ref="dataSource"></property>
+              <!-- 扫描enity包使用别名 -->
+              <property name="typeAliasesPackage" value="com.lx.practice.entity"></property>
+              <!-- 扫描映射文件 -->						   
+              <property name="mapperLocations"  value="classpath*:config/mybatis/mapper/*.xml"></property>
+             
+          </bean>
+          
+          <!-- 配置扫描dao层，动态实现dao接口，注入到spring容器中 -->
+         <!--  <bean  calss="org.mybatis.spring.mapper.MapperScannerConfigurer">
+             <property name="basePackage"  value="com.zhantanqi.zt.dao"></property>  
+             		使用sessionFactoryBanmeName 避免出现spring扫描失败问题
+             <property name="sqlSessionFactoryBeanName"  value="sqlSessionFactory"></property>
+          </bean> -->
+          
+          <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		     <property name="basePackage" value="com.lx.practice.dao" />
+		     <!-- 注意使用 sqlSessionFactoryBeanName 避免出现spring 扫描组件失效问题 -->
+		     <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	      </bean>
+          <bean id="gson" class="com.google.gson.Gson" scope="prototype"></bean>
+          
+</beans>

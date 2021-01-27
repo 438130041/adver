@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <title>个人中心</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="bootstrap.min.js"></script>
+</head>
+<style>
+    body{
+        background: #f7f7f7;
+    }
+    .container{
+        margin: 0;
+        padding: 0;
+        margin: 0 auto;
+        position: relative;
+    }
+    .head{
+        width: 100%;
+        height: 190px;
+        background:linear-gradient(#ffab52,#eb7b1a);
+        background: -moz-linear-gradient(#ffab52,#eb7b1a);
+        background: -webkit-linear-gradient(#ffab52,#eb7b1a);
+        background: -o-linear-gradient(#ffab52,#eb7b1a);
+        overflow: hidden;
+    }
+    .head-portrait{
+        width: 90px;
+        height: 90px;
+        border: 1px solid #fff;
+        border-radius: 50%;
+    }
+    .head-box{
+        width: 90%;
+        height: 90px;
+        margin: 0 auto;
+        margin-top: 40px;
+        position: relative;
+    }
+    .head-portrait , .information {
+        display: inline-block;
+    }
+    .information{
+        height: 90px;
+        color: #fff;
+        padding-left: 10px;
+    }
+    .head-portrait{
+        align-items: center;
+        vertical-align: top;
+        overflow: hidden;
+    }
+    .head-portrait>img{
+        width: 100%;
+        height: 100%;
+    }
+    .name{
+        font-size: 18px;
+        margin-top: 20px;
+    }
+    .personal-data{
+        font-size: 13px;
+    }
+    .set-up{
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        top: 20px;
+        right: 10px;
+    }
+    .set-up>img{
+        width: 100%;
+        height: 100%;
+    }
+    .rise{
+        width: 90%;
+        height: 90px;
+        background: #fff;
+        border-radius: 5px;
+        position: absolute;
+        top: 150px;
+        left: 5%;
+    }
+    ul li{
+        list-style: none;
+    }
+    ul{
+        margin: 0;
+        padding: 0;
+    }
+    .rise>ul{
+        width: 100%;
+    }
+    ul.riseli li:first-child{margin-left: 5%;}
+    .rise-portrait{
+        width: 40px;
+        height: 43px;
+        margin: 0 auto;
+        margin-top: 10px;
+    }
+    .rise-portrait>img{
+        width: 100%;
+        height: 100%;
+    }
+    .rise>ul>li{
+        display: inline-block;
+        width: 29%;
+        text-align: center;
+    }
+    .rise span{
+        display: block;
+        font-weight: 600;
+        padding-top: 5px;
+    }
+    .classification{
+        margin-top: 70px;
+        margin-bottom: 60px;
+    }
+    .classification-1,.classification-2{
+        width: 100%;
+        background: #fff;
+        margin-top: 10px;
+        border: 1px solid rgb(233, 233, 233);
+        border-left:none;border-right:none;
+    }
+    .classification-1>ul>li,.classification-2>ul>li{
+        width: 100%;
+        height: 60px;
+        font-size: 16px;
+        font-weight: 550;
+        line-height: 60px;
+        border-top: 1px solid rgb(233, 233, 233);
+        position: relative;
+    }
+    ul.firstli li:first-child{border-top: none;}
+    .array{
+        padding-left: 55px;
+    }
+    .arrays{
+        width: 25px;
+        height: 25px;
+        margin-left: 20px;
+        position: absolute;
+        top: -2px;
+    }
+    .arrays>img{
+        width: 100%;
+        height: 100%;
+    }
+    .array::after{
+        content: '';
+        width: 15px;
+        height: 15px;
+        background: url(向右.png) no-repeat center;
+        background-size: 100% 100%;
+        position: absolute;
+        top: 50%;
+        right: 25px;
+        transform: translateY(-50%);
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="head">
+            <div class="head-box">
+                <div class="head-portrait">
+                    <img src="https://ss1.baidu.com/-4o3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/95eef01f3a292df56cfa9214bc315c6034a873f1.jpg" alt="">
+                </div>
+                <div class="information">
+                    <div class="name">姓名</div>
+                    <div class="personal-data">完善个人资料&nbsp;></div>
+                </div>
+                <div class="set-up">
+                        <img src="设置.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="rise">
+            <ul class="riseli">
+                <li >
+                    <div class="rise-portrait">
+                        <img src="我的课程.png" alt="">
+                    </div>
+                    <span>我的课程</span>
+                </li>
+                <li>
+                    <div class="rise-portrait">
+                        <img src="直播.png" alt="">
+                    </div>
+                    <span>我的直播</span>
+                </li>
+                <li>
+                    <div class="rise-portrait">
+                        <img src="班级信息.png" alt="">
+                    </div>
+                    <span>我的班级</span>
+                </li>
+            </ul>
+        </div>
+        <div class="classification">
+            <div class="classification-1">
+                <ul class="firstli">
+                    <li>
+                        <div class="array">学习报告</div>
+                        <div class="arrays">
+                            <img src="报告.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">观看历史</div>
+                        <div class="arrays">
+                            <img src="历史.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">我的收藏</div>
+                        <div class="arrays">
+                            <img src="收藏.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">在线客服</div>
+                        <div class="arrays">
+                            <img src="客服.png"alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">帮助中心</div>
+                        <div class="arrays">
+                            <img src="帮助中心.png" alt="">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="classification-2">
+                <ul class="firstli">
+                    <li>
+                        <div class="array">我的订单</div>
+                        <div class="arrays">
+                            <img src="订单.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">我的钱包</div>
+                        <div class="arrays">
+                            <img src="钱包.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">我的物流</div>
+                        <div class="arrays">
+                            <img src="物流.png" alt="">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="array">我的优惠券</div>
+                        <div class="arrays">
+                            <img src="优惠券.png" alt="">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.KnowledgeInfosDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+      <!-- redis二级缓存 -->
+     <!--  <cache  type="com.lx.practice.util.RedisCache" />  -->
+      <!-- 根据选择的药学类型（题目）随机从表中查询出条题型数据-->
+       <select  id="find" parameterType="String"  resultType="KnowledgeInfos">
+          	SELECT * FROM   knowledge_info  where  knowledge_Name = #{knowledge_Name}     ORDER BY RAND() LIMIT 1;
+      </select> 
+     <!--将题型数据添加进数据库中 -->
+      <insert id="insertKnowledgeInfos"  parameterType="KnowledgeInfos"  >
+           insert  into  knowledge_info(knowledge_Id,knowledge_Name)  
+           values(#{knowledge_Id},#{knowledge_Name})
+      </insert>
+      
+      
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.smallfeaturedao.PaiHanDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+       
+       
+        <!-- 查看当日是否有打卡人数统计 -->
+       <select id="finddaKatonji"  parameterType="com.lx.practice.entity.DaKa"  resultType="com.lx.practice.entity.DaKa">
+         		 select  *  from  ceshi  where  createTime = #{createTime}
+       </select> 
+      
+      <!-- 添加当人数数据 -->
+      <insert id="insertdaridakashu"  parameterType="com.lx.practice.entity.DaKa">
+           insert  into  ceshi(createTime,daynumbers)  
+           values(#{createTime},#{daynumbers})
+      </insert>
+      
+      
+      <!-- 当日打卡人数更改 -->
+        <update id="updatedanridakashu"   parameterType="com.lx.practice.entity.DaKa">
+		   update  ceshi  set  daynumbers = ${daynumbers}
+		   where   createTime = #{createTime}
+      </update> 
+       
+       
+       
+</mapper>

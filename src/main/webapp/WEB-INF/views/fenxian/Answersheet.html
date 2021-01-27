@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <script src="flexible.js"></script>
+    <title>答题卡</title>
+</head>
+<style>
+    html{
+        background: #f1f1f1;
+    }
+    body{
+        max-width: 1000px;
+        min-width: 320px;
+        margin: 0 auto;
+        background: #f7f7f7;
+    }
+    .warpper{
+        width: 100%
+    }
+    .head-box{
+        padding: 0.555556rem  0 1.851852rem 0;
+    }
+    .question-type{
+        width: calc(100% - 0.555556rem) ;
+        margin-left: 0.277778rem;
+        background: #fefefe;
+        margin: 0 auto;
+        margin-bottom: 0.277778rem;
+        border-radius: 5px;
+    }
+    .question-type>ul{
+        margin-left: 0.185185rem;
+        padding: 0.185185rem 0;
+    }
+    .question-type>ul>li{
+        display: inline-block;
+        width: 0.925926rem;
+        height: 0.925926rem;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin: 0.185185rem 0.37037rem;
+        text-align: center;
+        line-height: 0.925926rem;
+        font-size: 0.333333rem;
+        font-weight: 500;
+        color: #6e6e6e;
+        cursor: pointer;
+    }
+    p{
+        font-size: 0.462963rem;
+        color: #f09d46;
+        padding: 0.277778rem 0 0 0.37037rem;
+        font-weight: 700;
+    }
+    .foot{
+        position: fixed;
+        bottom: 0;
+        height: 1.481481rem;
+        width: 100%;
+        max-width: 1000px;
+        background: #fff;
+        border-top: 1px solid rgb(241, 241, 241) ;
+    }
+    button{
+        display: block;
+        font-size: 0.462963rem;
+        border: 0;
+        background: content-box;
+        color: #f09d46;
+        margin: 0 auto;
+        line-height: 1.481481rem ;
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div class="wrapper">
+        <div class="head-box">
+            <div class="question-type">
+                <p>【单选题】</p>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                </ul>
+            </div>
+        
+            <div class="question-type">
+                <p>【配伍选择题】</p>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                </ul>
+            </div>
+            <div class="question-type">
+                <p>【综合分析题】</p>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                </ul>
+            </div>
+            <div class="question-type">
+                <p>【多选题】</p>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>7</li>
+                    <li>8</li>
+                    <li>9</li>
+                    <li>10</li>
+                    <li>11</li>
+                    <li>12</li>
+                    <li>13</li>
+                </ul>
+            </div>
+        </div>
+        <div class="foot">
+            <button>交卷并查看结果</button>
+        </div>
+    </div>
+</body>
+</html>

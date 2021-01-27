@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.LogUserDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+      <!-- redis二级缓存 -->
+     <!--  <cache  type="com.lx.practice.util.RedisCache" />  -->
+     
+      <!-- 查询出所有用户信息 -->
+      <select  id="findUsers" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  loguser  
+      </select> 
+      <!-- 根据用户微信id查询出用户表中是否有这个用户 -->
+      <select  id="findbyuser" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  loguser  where  openid = #{openid}
+      </select> 
+      <!-- 将用户信息存入库中 -->
+      <insert id="insertuser" parameterType="com.lx.practice.entity.LogUser">
+           insert  into  loguser(openid,nickname,headimgurl,days,createTime,integral,lv1state,lv2state,lv3state)  
+           values(#{openid},#{nickname},#{headimgurl},#{days},#{createTime},#{integral},#{lv1state},#{lv2state},#{lv3state})
+      </insert>
+      <!-- 更改用户连续登录天数 -->
+      <update id="updateuser"      parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   headimgurl = #{headimgurl},nickname = #{nickname},days = #{days},createTime = #{createTime},integral = #{integral},lv1state = #{lv1state},lv2state = #{lv2state},lv3state = #{lv3state} 
+		   where  openid = #{openid}
+      </update>
+      <!-- 如果用户不连续登录-->
+      <update id="findupdateuser"  parameterType="com.lx.practice.entity.LogUser">
+          update  loguser  set  headimgurl = #{headimgurl},nickname = #{nickname},days = #{days},createTime = #{createTime},integral = #{integral},lv1state = #{lv1state},lv2state = #{lv2state},lv3state = #{lv3state}  
+          where  openid = #{openid}
+      </update>
+      
+      
+       <!-- 更改用户微信头像 -->
+      <update id="updataheadimgurl"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set   headimgurl = #{headimgurl},codes = #{codes} 
+           where  openid = #{openid}
+      </update>
+      
+      
+      <!-- 更改用户的积分值 -->
+      <update id="updateintegral"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  integral = #{integral}   where  openid = #{openid}
+      </update>
+      <!-- 根据用户兑换码查询用户信息 -->
+     <select  id="finduserCode" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  loguser  where  exchange = #{exchange}
+     </select>
+      <!-- 更兑换码更改用户信息 -->
+      <update id="updateCode"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  integral = #{integral}  where  exchange = #{exchange}
+      </update>
+      <!-- 删除多余的微信信息 -->
+       <delete id="deleteCode" parameterType="com.lx.practice.entity.LogUser">
+         delete  from  loguser where openid = #{openid} and  SystemAccount = null
+      </delete>
+     <!-- 更兑领取礼物 -->
+      <update id="updateList1"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  integral = #{integral},lv1state = #{lv1state}  where  openid = #{openid}
+      </update>
+       <update id="updateList2"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  integral = #{integral},lv2state = #{lv2state}  where  openid = #{openid}
+      </update>
+       <update id="updateList3"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  integral = #{integral},lv3state = #{lv3state}  where  openid = #{openid}
+      </update>
+       
+       
+       
+      <!-- 用户注册 -->
+       <!-- 查询出表中是否有该用户 -->
+       <select  id="findby"      parameterType="String"  resultType="LogUser">
+          	select  *  from  jinyaosiUser  where  openid = #{openid}
+      </select> 
+       <!-- 添加用户信息（在用户信息中添加姓名与手机号） -->
+       <update id="updateList"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set  number =  #{number},User_Name =  #{User_Name}  where  openid = #{openid}
+      </update>
+       
+       
+       <!--将二维码图片存入数据库中 -->
+     <!--  <insert id="insertimg"  parameterType="com.lx.practice.entity.LogUser">
+           insert  into  Teacherif(imgs)
+           values(#{imgs})
+      </insert> -->
+      
+      <!-- 添加二维码信息 -->
+        <select  id="findimg" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  teacherif  where  codes = #{codes}
+        </select>
+        
+       <!-- 更改同一用户二维码图片 -->
+        <update id="updataimg" parameterType="com.lx.practice.entity.LogUser">
+             update  teacherif  set  imgs =  #{imgs}  where  codes = #{codes}
+        </update> 
+       
+       <!-- 兑换码兑换时查询是否有这个手机号 -->
+      <select  id="numberquery" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  loguser  where  number = #{number}
+      </select>
+       <!-- 兑换码兑换后更改数据 -->
+      <update id="updateitems"  parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set  items = 'null'
+		   where  exchange = #{exchange}
+      </update>
+       <!-- 将兑换码中的数据给与微信用户-->
+      <update id="updateuseritems"  parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set  items = #{items}
+		   where  openid = #{openid}
+      </update>
+      <!-- 用户兑换完物品后将微信里的物品信息改为空 -->
+      <update id="updatayonhuitems"  parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set  items = 'null'
+		   where  openid = #{openid}
+      </update>
+      <!-- 通过后台单个添加兑换码 -->
+      <insert id="exchangeinsert"  parameterType="com.lx.practice.entity.LogUser">
+           insert  into  loguser(StudentsName,number,exchange,items)
+           values(#{StudentsName},#{number},#{exchange},#{items})
+      </insert>
+      
+      
+       <!-- 新学员参加打卡活动 -->
+       <insert id="insertusercodes" parameterType="com.lx.practice.entity.LogUser">
+           insert  into  loguser(openid,nickname,headimgurl,TeacherCodes,createTime,lv1state,lv2state,lv3state)  
+           values(#{openid},#{nickname},#{headimgurl},#{TeacherCodes},#{createTime},#{lv1state},#{lv2state},#{lv3state})
+      </insert>
+       <!-- 学员连续参加 打卡活动 -->
+       <update id="updateusercodes"      parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   headimgurl = #{headimgurl},nickname = #{nickname},TeacherCodes = #{TeacherCodes}
+		   where  openid = #{openid}
+      </update>
+</mapper>

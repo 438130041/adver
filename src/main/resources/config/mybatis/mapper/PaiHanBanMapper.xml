@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.smallfeaturedao.PaiHanDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+
+      <!-- 将学员信息录入数据库 -->
+      <update id="insertStudents"  parameterType="com.lx.practice.entity.LogUser">
+           update  loguser  set   User_Name = #{User_Name},number = #{number},FewSubjects = #{FewSubjects},TeacherCodes = #{TeacherCodes}
+		   where  openid = #{openid}
+      </update>
+      
+      
+      <!-- 用户积分排行榜(前三)-->
+      <select  id="findPaiHan" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+		    <!-- select * from knowledge_info where parentId='6823298d-7d84-4d11-bf2c-11cd67dc1588' -->
+		    <!-- 因为sortCode字段在数据库中是以字符串的形式存储的，因此在查询时要在字段后面加一个0，这样查询出来的数据就是按顺序排列的 -->	
+		      select * from   loguser   ORDER  BY  integral+0  desc   limit 3
+       </select>
+      
+      <!-- 查询出积分前一百名 -->
+      <select  id="findPaiHanyibai" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+		    <!-- select * from knowledge_info where parentId='6823298d-7d84-4d11-bf2c-11cd67dc1588' -->
+		    <!-- 因为sortCode字段在数据库中是以字符串的形式存储的，因此在查询时要在字段后面加一个0，这样查询出来的数据就是按顺序排列的 -->	
+		      select * from   loguser   where  openid  != ''  and   headimgurl != ''   ORDER  BY  integral+0  desc   limit 100
+       </select>
+      
+      <!-- 查询出当前用户的积分排名-->
+       <select  id="findPaiHansuoyuo" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser"> 
+          		select  *  from  (select  (@i:=@i+1) as rownum,  u.*   from(select @i:=0) as it,  loguser as u    where  openid  != ''  and  headimgurl != ''   ORDER BY u.integral   DESC    )k   where   openid = #{openid}
+      </select> 
+      
+      <!-- 查询打卡用户是否已上传过图片 -->
+       <select  id="finddakauri" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  loguser  where    openid = #{openid}
+      </select>
+       
+      <!-- 第一次参加打卡活动，将用户信息存入数据库中（实际为更改数据） -->
+      <update id="insertdakaurl"      parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   dakaurl = #{dakaurl},dakatime = #{dakatime},dakatishu = #{dakatishu},integral = #{integral},state = #{state}
+		   where  openid = #{openid}
+      </update>
+       
+       
+      <!-- 排行榜页面打卡，更改用户积分和图片和打卡时间 -->
+      <update id="updatedakaurl"      parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   dakaurl = #{dakaurl},dakatime = #{dakatime},dakatishu = #{dakatishu},integral = #{integral},state = #{state}
+		   where  openid = #{openid}
+      </update>
+      
+      <!-- 同一天多次打卡 -->
+      <update id="updatetonyitian"    parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   dakaurl = #{dakaurl}
+		   where  openid = #{openid}
+      </update>
+      
+      
+      <!-- 查询当日打卡人数 -->
+      <select  id="finddaka" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from    loguser   where  dakatime = #{dakatime}  and  openid != '' 
+      </select>
+      
+      
+      
+      <!-- 老师专属代码验证 -->
+       <select  id="selectlaoshi" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  Teacherif  where  User_Name = #{User_Name} and  codes = #{codes}
+      </select>
+      
+      <!-- 代码验证  -->
+       <!-- <select  id="laoshidaima" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	select  *  from  Teacherif  where  codes = #{codes}
+      </select> -->
+      
+      
+      
+      <!-- 查询出50条打卡图片不为空的数据 -->
+       <select  id="dajiadakashuju" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	SELECT * FROM  loguser   where  dakaurl != '' and  headimgurl != ''  and   dakatime = #{zuotian}  OR   dakatime  = #{jintian}  ORDER BY RAND() LIMIT 50;
+      </select>
+      
+       
+       <!-- 根据用户id给抽奖加积分 -->
+        <update id="addintegral"    parameterType="com.lx.practice.entity.LogUser">
+		   update  loguser  set   integral = #{integral}
+		   where  openid = #{openid}
+      </update>
+       <!-- 查询出用户信息 -->
+       <select id="insertdaka"  parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+           select  *  from   loguser  where   openid = #{openid}
+       </select>
+       
+       
+       <!-- 将用户中奖纪录存入数据库 -->
+       <insert id="insertzjwupin"    parameterType="com.lx.practice.entity.LogUser">
+           insert  into  studentsprize(openid,nickname,prize,prizetime,state,daima,User_Name,number)
+           values(#{openid},#{nickname},#{prize},#{prizetime},#{state},#{daima},#{User_Name},#{number})
+       </insert>
+       
+       <!-- 查看用户中奖纪录 -->
+       <select id="insertjilu"  parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+           select  *  from   studentsprize  where   openid = #{openid}
+       </select>
+       
+       
+       
+       <!-- 查看所有用户中奖记录 -->
+       <select id="zhojianjilu"   resultType="com.lx.practice.entity.LogUser">
+           select  *  from   studentsprize     ORDER BY RAND() LIMIT 30
+       </select>
+       
+       
+       <!-- 更改用户奖品状态 -->
+       <update id="cojianjianpinzhuantai"    parameterType="com.lx.practice.entity.LogUser">
+		   update  studentsprize  set   state = #{state}
+		   where  openid = #{openid}  and   daima = #{daima}
+		    
+      </update>
+       
+      <!-- 查询手机号表中是否有这个手机号 -->
+       <select id="chaxuenshojihao"  parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+           select  *  from   phone  where   number = #{number}
+       </select>
+       
+       
+      <!-- 查询用户手机号 -->
+      <select id="sjihaohao"  parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+           select  *  from   loguser  where   openid = #{openid}
+      </select>
+      
+      
+      <!-- 将用户上传的图片存入我的打卡记录表中 -->
+      <insert id="woddakajilu"    parameterType="com.lx.practice.entity.LogUser">
+           insert  into  myrecord(openid,nickname,headimgurl,dakatime,dakaurl)
+           values(#{openid},#{nickname},#{headimgurl},#{dakatime},#{dakaurl})
+       </insert>
+      
+      <!-- 查询出我的打卡记录 -->
+      <select  id="selecttwoddaka" parameterType="String"  resultType="com.lx.practice.entity.LogUser">
+          	SELECT * FROM    myrecord   where   openid = #{openid}
+      </select>
+      
+      <!-- 查询出一条图片语句 -->
+      <select id="Pictureidea"   resultType="com.lx.practice.entity.LogUser">
+      		SELECT * FROM  picture_Idea   ORDER BY RAND() LIMIT 1
+      </select>
+      
+      <!-- 查询该用户是否已有该课程 -->
+      <select id="sfyiykecheng"    parameterType="com.lx.practice.entity.LogUser"   resultType="com.lx.practice.entity.LogUser">
+      		SELECT * FROM  studentsprize  where  openid = #{openid}  and   prize = #{prize}
+      </select>
+      
+      
+</mapper>

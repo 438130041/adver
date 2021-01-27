@@ -1,0 +1,254 @@
+﻿$(function () {
+    ruleInit();
+    DrawNumInit();
+    DrawProInit();
+    $(".btncoujiang").click(function () {
+        DrawFun();
+    });
+});
+var DrawProList = new Array();
+var DrawNum = 100;
+/*抽奖规则展示*/
+function ruleInit() {
+    var res = document.cookie.indexOf("rule");
+    if (res < 0) {
+        document.cookie = "rule=ok;";
+        rulemsg();
+    }
+}
+//页面层
+function rulemsg() {
+    //layer.open({
+    //    title:"规则提示",
+    //    type: 1,
+    //    skin: 'layui-layer-demo', //样式类名
+    //    closeBtn: 1, //不显示关闭按钮
+    //    anim: 3,
+    //    shadeClose: true, //开启遮罩关闭
+    //    content: $(".rulehtml").html()
+    //});
+    layer.open({
+        type: 1,
+        shade: false,
+        title: false, //不显示标题
+        shadeClose: true, //开启遮罩关闭
+        content: $(".rulehtml") //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+
+    });
+}
+function setcookie(name, value) {
+    $.cookie(name, value, { expires: 14 });
+}
+function getcookie(name) {
+    return $.cookie(name);
+}
+//抽奖次数限制
+function DrawNumInit() {
+    var date = new Date();
+    var cookname = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDay();
+    var res = getcookie(cookname);
+    if (res == "" || res == null) {
+        setcookie(cookname, DrawNum);
+    } else {
+        DrawNum = res;
+    }
+    DrawNumShow();
+}
+function DrawSetNum() {
+    var date = new Date();
+    var cookname = date.getFullYear() + "/" + date.getMonth() + "/" + date.getDay();
+    setcookie(cookname, DrawNum);
+    DrawNumShow();
+}
+function DrawNumShow() {
+    $(".num").html(DrawNum);
+}
+//抽奖方法
+function DrawFun() {
+    if (DrawNum == 0) {
+        layer.msg("今日抽奖机会已用完啦，明天再来吧~");
+        return;
+    }
+    DrawNum--;
+    DrawSetNum();
+    $(".box").each(function () {
+        $(this).addClass("redgod");
+    });
+    $(".btncoujiang").addClass("btncoujiangGo");
+    //延迟执行
+    setTimeout(function () {
+        var DrawCheckNum = randomNum(1, 10000);
+        var proobj;
+        $.each(DrawProList, function (i, item) {
+            if (item.MaxNum >= DrawCheckNum && item.MinNum <= DrawCheckNum) {
+                proobj = item;
+                return
+            }
+        });
+        $(".btncoujiang").removeClass("btncoujiangGo");
+        $(".box").each(function () {
+            $(this).removeClass("redgod");
+        });
+        TipFun(proobj);
+    }, 3000);
+}
+
+function TipFun(proobj) {
+    if (proobj.url) {
+        //询问框
+        layer.confirm(proobj.Msg, {
+            title: "抽奖信息",
+            btn: ['立即前往兑换','分享给朋友'] //按钮
+        }, function () {
+            location.href = proobj.url;
+        }, function () {
+			location.href="分享页面url?url="+proobj.url;
+            layer.msg("您可在中奖记录中进行兑换操作");
+        });
+    } else {
+        layer.alert(proobj.Msg, {
+            title: "抽奖信息",
+            icon: 1,
+            skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+        });
+    }
+}
+
+function DrawProInit() {
+    DrawProList.push({
+        Name: "30积分",
+        Probabilityf: 0.45,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "恭喜你获得" + this.Name + "奖励！积分已自动累积至你的积分账户"
+    });
+    DrawProList.push({
+        Name: "50积分",
+        Probabilityf: 0.35,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "恭喜你获得" + this.Name + "奖励！积分已自动累积至你的积分账户"
+    });
+    DrawProList.push({
+        Name: "100积分",
+        Probabilityf: 0.1,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "恭喜你获得" + this.Name + "奖励！积分已自动累积至你的积分账户"
+    });
+    DrawProList.push({
+        Name: "谢谢参与",
+        Probabilityf: 0.039,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "再接再厉~下次运气更好"
+    });
+    DrawProList.push({
+        Name: "小病医生",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=339"
+    });
+    DrawProList.push({
+        Name: "慢病专员",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=340"
+    });
+    DrawProList.push({
+        Name: "保健按摩师",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=342"
+    });
+    DrawProList.push({
+        Name: "健康管理师",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=341"
+    });
+    DrawProList.push({
+        Name: "单科刷分题库",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=336"
+    });
+    DrawProList.push({
+        Name: "单科密押卷",
+        Probabilityf: 0.01,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: "http://shop.jingyaoshi.net/details?GoodsID=337"
+    });
+    DrawProList.push({
+        Name: "VIP保过班",
+        Probabilityf: 0.001,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "人品大爆发！恭喜你获得一年的VIP保过班，请联系老师领取",
+        url: ""
+    });
+    DrawProList.push({
+        Name: "学历提升",
+        Probabilityf: 0,
+        MaxNum: 0,
+        MinNum: 0,
+        Msg: "运气爆棚！恭喜你获得" + this.Name + "课程奖励",
+        url: ""
+    });
+    SetProBabiNumFun();
+
+}
+/**计算NUM**/
+function SetProBabiNumFun() {
+    var ProNum = 10000;
+    var OKnum = 0;
+    $.each(DrawProList, function (i, item) {
+        item.MaxNum = OKnum + item.Probabilityf * ProNum;
+        item.MinNum = OKnum + 1;
+        OKnum = item.MaxNum;
+        item.Msg = item.Msg.replace("undefined", item.Name);
+        AddProList(item);
+    });
+}
+function AddProList(ProObj) {
+    var stylename = "red";
+    switch (randomNum(1, 3)) {
+        case 1:
+            stylename = "red";
+            break;
+        case 2:
+            stylename = "green";
+            break;
+        case 3:
+            stylename = "blue";
+            break;
+    }
+    $("#ProList").append("<div class=\"col-md-4 col-xs-4 col-sm-4\"><div class=\"box  " + stylename + "\">" + ProObj.Name + "</div></div>");
+}
+
+
+function randomNum(minNum, maxNum) {
+    switch (arguments.length) {
+        case 1:
+            return parseInt(Math.random() * minNum + 1, 10);
+            break;
+        case 2:
+            return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+            break;
+        default:
+            return 0;
+            break;
+    }
+} 

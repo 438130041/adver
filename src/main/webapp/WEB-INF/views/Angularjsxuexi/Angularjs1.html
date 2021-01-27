@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ><!-- 加上这个标签就可以使用Angularjs了 -->
+<head>
+<meta charset="UTF-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <!-- <script  type="text/javascript"  src='../resources/admin/js/jquery-1.10.1.min.js'></script> -->
+    <!-- <script src='https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js'></script>  -->
+    <script  type="text/javascript"  src="../resources/admin/js/jquery.min.js"></script> 
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
+    <link rel="stylesheet" href="../resources/admin/css/common.css?v=20160520">
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js' integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa' crossorigin='anonymous'></script>
+	<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.min.js"></script>
+<title>Insert title here</title>
+
+</head >
+<body ng-app="MyApp">
+	
+		姓名：<input type="text" ng-model="name">
+<br>
+性别：<input type="radio" name="sex" value="男" ng-model="sex">男
+      <input type="radio" name="sex" value="女" ng-model="sex">女
+<br>
+兴趣：<input type="checkbox" name="interest" ng-model="interest1" ng-true-value="游泳" ng-false-value="无选中兴趣1">游泳
+      <input type="checkbox" name="interest" ng-model="interest2" ng-true-value="旅游" ng-false-value="无选中兴趣2">旅游
+      <input type="checkbox" name="interest" ng-model="interest3" ng-true-value="打篮球" ng-false-value="无选中兴趣3">打篮球
+<br><br>
+<fieldset>
+    <legend>{{name}}的基本信息如下：</legend>
+    <br>
+    性别：{{sex}}
+    <br>
+    兴趣爱好：{{interest1}} {{interest2}} {{interest3}}
+</fieldset>
+
+
+
+</body>
+</html>

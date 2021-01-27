@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.GeRenXinXiDao.GeRenXinXiDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+	
+      <!-- 将用户信息存入用户信息表中 -->
+      <insert id="insertgerenxinxi"  parameterType="UserinFormation" >
+		 	insert  into  user_Personal_information(openid,nickname,headimgurl)  
+            values(#{openid},#{nickname},#{headimgurl})      	 
+      </insert>
+      
+      
+      <!-- 查询出用户个人信息 -->
+      <select id="selectuser"  parameterType="String"  resultType="UserinFormation">
+      		select  *  from   user_Personal_information   where  openid = #{openid}
+      </select>
+      
+</mapper>

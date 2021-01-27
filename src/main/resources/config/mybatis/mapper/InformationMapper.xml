@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.HoTaiDao.InformationDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+		<!-- 查询出每日一练用户信息表中的所有用户信息 -->
+        <!-- 查询出所有用户信息 -->
+      <select  id="yonhufind" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where   openid  != ''  LIMIT #{start},#{limit}
+      </select>
+        
+          <!-- 查询出数据总条数 -->
+      <select  id="orderpt"   resultType="Integer">
+          	select  count(*)  from  loguser  
+      </select>
+       <!-- 用户姓名模糊查询 -->
+     <select  id="finduser" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where  1 = 1
+          	 <if test="User_Name != null">
+				   and  User_Name  like '%${User_Name}%'
+			 </if> 
+			 LIMIT #{start},#{limit}
+      </select>
+      <!-- 根据用户微信昵称查询用户信息 -->
+      <select  id="findnickname" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where  1 = 1
+          	  <if test="nickname != null">
+				   and  nickname  like '%${nickname}%'
+			 </if> 
+          	 LIMIT #{start},#{limit}
+      </select>
+      <!-- 根据用户手机号查询用户信息 -->
+      <select  id="findnumber" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where   number = #{number}
+      </select>
+      
+      <!--  根据老师专属代码查询出相应学员  -->
+      <select  id="findTeacherCodes" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where   TeacherCodes = #{TeacherCodes}  and  openid  != '' 
+      </select>
+      
+      <!-- 学员奖品状态查询 -->
+       <select  id="jianpinzhuantai" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   studentsprize    
+      </select>
+      
+      <!-- 打卡活动专属学员查询 -->
+       <select  id="dakahuodonxueyuan"   parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   loguser   where     TeacherCodes != ''     LIMIT #{start},#{limit}
+      </select>
+      
+      <!-- 奖品信息查询 -->
+       <select  id="jianpinchaxuen" parameterType="com.lx.practice.entity.LogUser"  resultType="com.lx.practice.entity.LogUser">
+          	 select * from   studentsprize   where  prize  = #{prize}
+      </select>
+      
+      <!-- 专属学员条数 -->
+         <!-- 查询出数据总条数 -->
+      <select  id="zhuanshuorderpt"   resultType="Integer">
+          select  count(*)  from  loguser   WHERE  TeacherCodes != ''
+      </select>
+</mapper>

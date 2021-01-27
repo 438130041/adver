@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.CuoTiDao.CuoTiConZuoDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+       
+        <!-- 查询题目id下的信息-->
+       <select id="tmuchaxuen"  parameterType="com.lx.practice.entity.ExamQuestion"  resultType="com.lx.practice.entity.ExamQuestion">
+         		select * from  exam_question  where  questions_id  =  #{questions_id}	
+       </select> 
+       
+       	
+       	<!-- 根据微信id和章节id查询章节表中是否已有该章节 -->
+       	<select id="chaxuensfygaizhangjie"  parameterType="com.lx.practice.entity.ExamQuestion"  resultType="com.lx.practice.entity.ExamQuestion">
+         		select * from  error_zhanjie  where  knowledge_Id  =  #{knowledge_Id}	and    openid = #{openid}
+        </select> 
+       	
+       
+       <!-- 根据微信id和错题id查询错题表中是否已经有了该错题  -->
+         <select id="chaxuencuotisfcuenzai"  parameterType="com.lx.practice.entity.ExamQuestion"  resultType="com.lx.practice.entity.ExamQuestion">
+         		select * from  error_title  where  questions_id  =  #{questions_id}	and    openid = #{openid}
+        </select> 
+       
+       
+       
+       
+       	 <!-- 储存章节信息 -->
+       		<insert id="cuotizhanjiecucuen"  parameterType="com.lx.practice.entity.ExamQuestion">
+           		insert  into  error_zhanjie(openid,knowledge_Id,knowledge_Name,parentId,title_Sum,sortCode)
+               values(#{openid},#{knowledge_Id},#{knowledge_Name},#{parentId},#{title_Sum},#{sortCode})
+       		</insert>
+       		
+       		
+         <!-- 历史错题章节储存 -->
+       		<insert id="lishicuotizhanjie"  parameterType="com.lx.practice.entity.ExamQuestion">
+           		insert  into  history_zhanjie(openid,knowledge_Id,knowledge_Name,parentId,title_Sum,sortCode)
+               values(#{openid},#{knowledge_Id},#{knowledge_Name},#{parentId},#{title_Sum},#{sortCode})
+       		</insert>
+       		
+       		
+         <!-- 将错题信息存入（错题重做）数据库中-->
+       <insert id="cuoticuenru"  parameterType="com.lx.practice.entity.ExamQuestion">
+           insert  into  error_title(openid,knowledge_Id,questions_id,knowledge_Name,questions_json,questions_Type,parentId)
+           values(#{openid},#{knowledge_Id},#{questions_id},#{knowledge_Name},#{questions_json},#{questions_Type},#{parentId})
+       </insert>
+       
+        <!-- 将错题信息存入历史错题库中 -->
+        <insert id="lishicuoticc"  parameterType="com.lx.practice.entity.ExamQuestion">
+           insert  into  history_title(openid,knowledge_Id,questions_id,knowledge_Name,questions_json,questions_Type,parentId)
+           values(#{openid},#{knowledge_Id},#{questions_id},#{knowledge_Name},#{questions_json},#{questions_Type},#{parentId})
+       </insert>
+       
+       
+       <!-- 删除错题库中的错题信息 -->
+       <delete id="cuotishanchus"  parameterType="com.lx.practice.entity.ExamQuestion">
+			delete   FROM    error_title   where    openid = #{openid}  and   questions_id = #{questions_id}      
+       </delete>
+       
+       
+       <!-- 根据章节名查询章节数 -->
+       <select id="cuotizhangjieshu"  parameterType="com.lx.practice.entity.ExamQuestion"  resultType="com.lx.practice.entity.ExamQuestion">
+         		 select * from  knowledge_info  where   parentId  = #{parentId}  and   knowledge_Name = #{knowledge_Name}  and    sortCode  != 'null'  
+         		
+         		<!-- select * from  knowledge_info  where  parentId  = #{parentId}	 ORDER  BY  sortCode+0  asc    -->
+         		
+       </select>
+       
+       <!-- 删除错题题目后更改章节表中的章节题目数 -->
+         <update id="cuotizhangjiegengai"  parameterType="com.lx.practice.entity.LogUser">
+           	update  error_zhanjie  set   title_Sum = #{title_Sum}
+		   	where  knowledge_Id = #{knowledge_Id}  and  openid = #{openid}
+         </update>
+       
+       
+       	<!-- 查询出历史章节表中的章节题目数 -->
+       	  <select id="lishizhanjietimushu"  parameterType="com.lx.practice.entity.ExamQuestion"  resultType="com.lx.practice.entity.ExamQuestion">
+         		select * from  history_zhanjie    where   knowledge_Id = #{knowledge_Id}  and   openid = #{openid}
+       	  </select>
+       		
+       		
+       
+      <!-- 历史错题章节表错题数更改 -->
+         <update id="lishicuotizhanjiegengai"  parameterType="com.lx.practice.entity.LogUser">
+           	update  history_zhanjie  set   title_Sum = #{title_Sum}
+		   	where   knowledge_Id = #{knowledge_Id}  and  openid = #{openid}
+         </update>
+       
+       
+       
+      <!-- 查询出章节表中某个章节下的题目数 -->
+        <select  id="cuotizhangjietimushu" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='1e4e3284-bac9-411e-a583-835d40ab8271' -->
+		     select * from error_title  where knowledge_Id = #{knowledge_Id}   and    openid = #{openid}
+       </select>
+       
+       
+       
+       
+       <!-- 错题章节查询 -->
+       <!-- 章节精选 （中药学专业知识一）-->
+       <select  id="cuotizZYY" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='1e4e3284-bac9-411e-a583-835d40ab8271' -->
+		    select * from error_zhanjie where parentId='60079614-2c3f-4ef5-a60e-db3c6bb5b2e6'   and    openid = #{openid}    ORDER  BY  sortCode+0  asc    
+       </select>
+       <!-- 章节精选 （中药学专业知识二）-->
+       <select  id="cuotizZYE" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='9b4216e3-eab1-4168-a156-64c48f019742' --> 
+			select * from error_zhanjie where parentId='a638780e-40ea-4b24-85c8-b58a1e112ff4'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc 
+       </select>
+        <!-- 章节精选 （中药学综合知识与技能）-->
+       <select  id="cuotizZYZH" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='1a9cfcd9-3f71-4bd3-a945-1d22a0843eb3' -->
+			select * from error_zhanjie where parentId='b54ed4c4-a9ba-405c-8d20-8c0b703e8f4c'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc  
+       </select>
+        <!-- 章节精选 （药事管理与法规）-->
+       <select  id="cuotizYS" parameterType="ExamQuestion"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+			select * from error_zhanjie where parentId='148ac965-7a16-4e59-ad28-554fc760afa7'   and    openid = #{openid}   ORDER  BY  sortCode+0  asc  
+       </select>
+       
+       
+       <!-- 章节精选 （药学专业知识一）-->
+       <select  id="cuotizXYY" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='6823298d-7d84-4d11-bf2c-11cd67dc1588' -->
+		    <!-- 因为sortCode字段在数据库中是以字符串的形式存储的，因此在查询时要在字段后面加一个0，这样查询出来的数据就是按顺序排列的 -->	
+		      select * from error_zhanjie where parentId='c9f44130-5ea8-4c99-a9f2-b1da75fc21c6'  and    openid = #{openid}    ORDER BY sortCode+0  asc
+       </select>
+       <!-- 章节精选 （药学专业知识二）-->
+       <select  id="cuotizXYE" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+		      select * from error_zhanjie where parentId='99286489-2d7e-4eaf-8ef2-ed8e6f2f5e31'  and    openid = #{openid}   ORDER  BY  sortCode+0  asc     
+       </select>
+       <!-- 章节精选 （药学综合知识与技能）-->
+        <select  id="cuotizXYZH" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		   <!--  select * from knowledge_info where parentId='64b67992-b30a-4c12-89f9-e2a2584d4176' -->
+		    select * from error_zhanjie where parentId='0c1947d3-d248-4fa9-8fb8-36c786b1816b'	 and    openid = #{openid}   ORDER  BY  sortCode+0  asc      
+        </select>
+       
+       <!--   查询出对应章节下的题目  -->
+           <!-- 查询出所有科目下面的章节对应的题目 -->
+        <select  id="cuotitimu" parameterType="ExamQuestion"  resultType="ExamQuestion">
+		   <!--  select * from knowledge_info where parentId='64b67992-b30a-4c12-89f9-e2a2584d4176' -->
+		    select * from  error_title  where  knowledge_Id  =  #{knowledge_Id}	 and    openid = #{openid}
+       </select>
+       
+</mapper>

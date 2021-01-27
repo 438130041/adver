@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.HuoDongDao.XueLiTuiGuangDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+			
+			<!-- 查询出数据库中是否有这个推广人信息 -->
+			<select id="selectxuelituiguangren"  parameterType="HuoDongUser"   resultType="HuoDongUser">
+					select * from   xuelituiguang   where     openid = #{openid}
+			</select>
+			
+			
+			
+			<!-- 将推广人信息存入数据库中 -->
+			<update id="inserttiuguangren"  parameterType="HuoDongUser" >
+                    update  xuelituiguang  set   StudentsName = #{StudentsName},number = #{number}
+		   			where   openid = #{openid}
+			</update>
+			
+			
+			<!-- 将用户微信信息存入数据中 -->
+			<select id="insetwxxinxi" parameterType="HuoDongUser">
+				   insert  into  xuelituiguang(openid,nickname,headimgurl)
+                    values(#{openid},#{nickname},#{headimgurl})
+			</select>
+			        
+</mapper>

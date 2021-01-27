@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper  namespace="com.lx.practice.dao.ExamQuestionDao"><!-- parameterType传入的参数类型，resultType输出的参数类型 -->
+      <!-- redis二级缓存 -->
+     <!--  <cache  type="com.lx.practice.util.RedisCache" />  -->
+      <!-- 根据选择的药学类型（中药学专业知识一）随机从表中查询出条题型数据-->
+       <select  id="findByEQ" parameterType="String"  resultType="ExamQuestion">
+           SELECT * FROM  exam_question  where  (questions_Type = '1' OR  questions_Type = '2') and knowledge_Id in(
+			  select  knowledge_Id  from knowledge_info where parentId='60079614-2c3f-4ef5-a60e-db3c6bb5b2e6' 	
+			)ORDER BY RAND() LIMIT 5  
+      </select>
+       
+       
+       <!-- 根据选择的药学类型（药事管理与法规）随机从表中查询出条题型数据-->
+       <select  id="findByFG" parameterType="String"  resultType="ExamQuestion">
+           SELECT * FROM  exam_question  where   (questions_Type = '1' OR  questions_Type = '2')    AND  knowledge_Id IN(
+				select  knowledge_Id  from knowledge_info where parentId='148ac965-7a16-4e59-ad28-554fc760afa7'  		
+			)ORDER BY RAND() LIMIT 5 
+      </select>
+       
+       
+       <!-- 根据选择的药学类型（中药学专业知识二）随机从表中查询出条题型数据-->
+       <select  id="findByZE" parameterType="String"  resultType="ExamQuestion">
+		SELECT * FROM  exam_question  where  (questions_Type = '1' OR  questions_Type = '2')  and  knowledge_Id in(
+			select  knowledge_Id  from knowledge_info where parentId='a638780e-40ea-4b24-85c8-b58a1e112ff4' 		
+			) ORDER BY RAND() LIMIT 5  
+       </select>
+       
+       
+       <!-- 根据选择的药学类型（中药学综合知识与技能）随机从表中查询出条题型数据-->
+       <select  id="findByZH" parameterType="String"  resultType="ExamQuestion">
+			SELECT * FROM  exam_question  where   (questions_Type = '1' OR  questions_Type = '2')  and  knowledge_Id in(
+			  select  knowledge_Id  from knowledge_info where parentId='b54ed4c4-a9ba-405c-8d20-8c0b703e8f4c'		
+			)ORDER BY RAND() LIMIT 5  
+           
+       </select>
+       
+       
+       <!-- 章节精选 （中药学专业知识一）-->
+       <select  id="findZYY" parameterType="String"  resultType="ExamQuestion">
+		    <!-- select * from knowledge_info where parentId='1e4e3284-bac9-411e-a583-835d40ab8271' -->
+		    select * from knowledge_info where parentId='60079614-2c3f-4ef5-a60e-db3c6bb5b2e6'   ORDER  BY  sortCode+0  asc    
+       </select>
+       <!-- 章节精选 （中药学专业知识二）-->
+       <select  id="findZYE" parameterType="String"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='9b4216e3-eab1-4168-a156-64c48f019742' --> 
+			select * from knowledge_info where parentId='a638780e-40ea-4b24-85c8-b58a1e112ff4'   ORDER  BY  sortCode+0  asc 
+       </select>
+        <!-- 章节精选 （中药学综合知识与技能）-->
+       <select  id="findZYZH" parameterType="String"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='1a9cfcd9-3f71-4bd3-a945-1d22a0843eb3' -->
+			select * from knowledge_info where parentId='b54ed4c4-a9ba-405c-8d20-8c0b703e8f4c'   ORDER  BY  sortCode+0  asc  
+       </select>
+        <!-- 章节精选 （药事管理与法规）-->
+       <select  id="findYS" parameterType="String"  resultType="ExamQuestion">
+			<!-- select * from knowledge_info where parentId='c0ad3aca-eb96-42ba-872b-27cde5da996d' -->
+			select * from knowledge_info where parentId='148ac965-7a16-4e59-ad28-554fc760afa7'   ORDER  BY  sortCode+0  asc  
+       </select>
+       
+        <!--   查询出对应章节下的题目  -->
+           <!-- 查询出所有科目下面的章节对应的题目 -->
+        <select  id="findzyzuoti" parameterType="String"  resultType="ExamQuestion">
+		   <!--  select * from knowledge_info where parentId='64b67992-b30a-4c12-89f9-e2a2584d4176' -->
+		    select * from  exam_question  where  knowledge_Id  =  #{knowledge_Id}	         
+       </select>
+       
+       
+       
+       
+       
+     <!--将题型数据添加进数据库中 -->
+      <insert id="insertKnowledgeInfos"  parameterType="KnowledgeInfos">
+           insert  into  knowledge_info(knowledge_Id,knowledge_Name)  
+           values(#{knowledge_Id},#{knowledge_Name})
+      </insert>
+      
+      <!-- 测试b型题 -->
+      <select  id="findcs" parameterType="String"  resultType="ExamQuestion">
+           SELECT * FROM   exam_question   where  knowledge_Id  = '664145eb-5a0d-4f91-92a5-a6df16d39a5c' ;
+      </select>
+      
+      
+      
+      
+       <!-- 查询同一章节下不同题型 -->
+            <!-- 单选题 -->
+        <select id="dangxuanti"   parameterType="String"  resultType="ExamQuestion">
+     			 SELECT * FROM   exam_question   where  knowledge_Id  = #{knowledge_Id}   and  questions_Type = '1'; 
+        </select>
+           <!-- 多选题 -->
+        <select id="duoxuanti"  parameterType="String"  resultType="ExamQuestion">
+        		 SELECT * FROM   exam_question   where  knowledge_Id  = #{knowledge_Id}   and  questions_Type = '2'; 
+        </select>
+           <!-- b型题 -->
+        <select id="bxingti"  parameterType="String"  resultType="ExamQuestion">
+        		 SELECT * FROM   exam_question   where  knowledge_Id  = #{knowledge_Id}   and  questions_Type = '6'; 
+        </select>
+           <!-- 综合题 -->
+        <select id="zonheti"  parameterType="String"  resultType="ExamQuestion">
+        		 SELECT * FROM   exam_question   where  knowledge_Id  = #{knowledge_Id}   and  questions_Type = '7'; 
+        </select>
+        <!-- 查询出该章节下所有题目 -->
+        <!-- <select id="chaxuenzhanjieshuoyti" parameterType="String"  resultType="ExamQuestion">
+        		SELECT * FROM   exam_question   where  knowledge_Id  = #{knowledge_Id}
+        </select> -->
+        
+        
+        <!-- 查询用户是否已经付费 -->
+        <select id="chaxuenyonhusff"  parameterType="ExamQuestion"  resultType="ExamQuestion">
+        		select *  from   user_payment  where  openid = #{openid}  and  number = #{number}  and  StudentsName = #{StudentsName}  and  state = '已付款'
+        </select>
+        
+        
+</mapper>
